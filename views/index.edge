@@ -1,0 +1,29 @@
+@layout('main.edge')
+
+
+@section('body')
+    <h1 class="py-6 text-center text-2xl font-bold uppercase">
+      Mis cursos
+    </h1>
+    <div
+      class="mx-auto mt-6 grid max-w-3xl gap-4"
+      style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
+      id="container-cursos"
+    >
+      @each(course in cursos)
+      <div
+        class="mx-auto flex max-w-sm flex-col justify-between rounded-lg bg-white p-4 shadow"
+      >
+        <h2 class="mb-2 text-lg font-medium">{{course.title}}</h2>
+        <p class="mb-4 text-gray-500">
+          {{course.description}}
+        </p>
+        <span
+        class="rounded-full bg-{{course.color}}-500 px-2 py-3 text-center text-xs font-medium text-white"
+        >{{course.level.toUpperCase()}}</span
+        >
+      </div>
+      @endeach
+    </div>
+@endsection    
+    

@@ -1,0 +1,14 @@
+{
+    "courses": [
+        {
+            "id": 1,
+            "name": "Curso de Desarrollo Web",
+            "description": "Prueba la mejor opcion para aprender las habilidades de HTML, CSS, SASS y Bootstrap."
+        },
+        {
+            "id": 2,
+            "name": "Curso de JavaScript",
+            "description": "Aprende a crear aplicaciones dinamicas con JavaScript, en este curso."
+        }
+    ]
+}
