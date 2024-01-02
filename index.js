@@ -2,8 +2,15 @@
 const express = require("express");
 const path = require("path");
 const { PrismaClient } = require("prisma/prisma-client");
+const bodyParser = require("body-parser");
 const engine = require("express-edge");
+const session = require("express-session");
+const flash = require("connect-flash");
 
+//imports Routers
+
+const { coursesRouter } = require("./router/courses");
+const { mainRouter } = require("./router/index");
 //create app
 const app = express();
 
@@ -21,6 +28,8 @@ app.use(engine);
 //Middlewares
 app.use(express.static("public"));
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use((req, res, next) => {
   console.log(`
   new request: 
@@ -31,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/lutsi", async (req, res) => {
-  const courses = await client.course.findMany();
+  const courses = await req.client.course.findMany();
   res.json(courses);
 });
 
@@ -40,32 +49,25 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(
+  session({
+    secret: "mysecretkey",
+    saveUninitialized: false,
+    resave: false,
+  })
+);
+
+app.use(flash());
+
 //Routes
-app.get("/", async (req, res) => {
-  const cursos = await req.client.course.findMany();
-  const colors = {
-    begginer: "blue",
-    intermediate: "green",
-    advanced: "purple",
-  };
-  const coursesWithColors = cursos.map((c) => {
-    return {
-      ...c,
-      color: colors[c.level],
-    };
-  });
-  console.log(cursos);
-  res.render("index", {
-    cursos: coursesWithColors
-  });
-});
+app.use(coursesRouter);
+app.use(mainRouter);
 
 app.get("/about", (req, res) => {
   res.render("index", {
     archivo: "SI PINTA HAY TIJERA",
   });
 });
-
 app.listen(port, () => {
   console.log("Escuchando en puerto " + port);
 });

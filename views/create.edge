@@ -1,5 +1,26 @@
-@layout('layout/main')
-
+@layout('layouts/main')
 @section('body')
-  
+
+@set('title', 'Create Course')
+
+<div class="flex min-h-screen w-full flex-col justify-center bg-gray-200">
+    <h2 class="mb-4 text-center text-2xl font-bold">Create a course</h2>
+    @if(errors)
+      <p class="text-center text-red-600">{{errors}}</p>
+    @endif
+    <form method="POST" class="mx-auto w-full max-w-lg rounded bg-white px-6 py-12">
+      <label class="block font-bold" for="title">Course Title</label>
+      <input minlength="5" maxlength="170" required name="title" id="title" class="mt-2 w-full rounded border-2 border-zinc-300 px-2 py-2" type="text" />
+      <label class="mt-6 block font-bold" for="description">Course Description</label>
+      <textarea minlength="5" maxlength="200" required name="description" id="description" class="mt-2 w-full rounded border-2 border-zinc-300 px-2 py-2" type="text"></textarea>
+      <label class="mt-6 block font-bold" for="level">Course Level</label>
+      <select required name="level" class="mt-2 w-full border-2 px-2 border-zinc-300 py-3" id="level">
+        <option selected value="beginner">Beginner</option>
+        <option value="intermediate">Intermediate</option>
+        <option value="advanced">Advanced</option>
+      </select>
+      <input class="mt-8 w-full cursor-pointer rounded bg-indigo-800 py-2 text-white" type="submit" value="Create" />
+    </form>
+  </div>
+    
 @endsection
